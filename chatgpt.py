@@ -13,7 +13,7 @@ import time
 import dotenv
 dotenv.load_dotenv()
 
-st.title("ChatGPT")
+st.title("체인지업 ChatGPT")
 
 # Set a default model
 if "openai_model" not in st.session_state:
