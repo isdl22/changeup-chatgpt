@@ -35,7 +35,7 @@ if prompt := st.chat_input("여기에 물어보세요."):
         message_placeholder = st.empty()
         full_response = ""
         # LLM
-        llm = ChatOpenAI()
+        # llm =  ChatOpenAI()
 
         # Prompt
         custom_prompt = ChatPromptTemplate(
@@ -51,7 +51,7 @@ if prompt := st.chat_input("여기에 물어보세요."):
         # Notice that we `return_messages=True` to fit into the MessagesPlaceholder
         # Notice that `"chat_history"` aligns with the MessagesPlaceholder name
         memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-        conversation = LLMChain(llm=llm, prompt=custom_prompt, verbose=True, memory=memory)
+        conversation = LLMChain(llm=ChatOpenAI(), prompt=custom_prompt, verbose=True, memory=memory)
 
         # Notice that we just pass in the `question` variables - `chat_history` gets populated by memory
         result = conversation({"question": prompt})
