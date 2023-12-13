@@ -1,3 +1,6 @@
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import requests
 import json
@@ -377,6 +380,15 @@ class AssistantAPI():
         run = self.submit_tool_outputs(tool_outputs)
 
 
+ZAPIER_API_KEY: str = "sk-ak-NoB23a7i15so6exmECdPx9JUkL"
+openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+
+if not openai_api_key:
+    st.info("OpenAI API를 먼저 입력해주세요.")
+    st.stop()
+
+import os
+os.environ["OPENAI_API_KEY"] = openai_api_key
 
 try:
     zapier_api = ZapierActionAPI(ZAPIER_API_KEY)
@@ -385,7 +397,7 @@ except ValueError as e:
 
 import streamlit as st
 
-st.title("Zapier Assistant Demo")
+st.title("GPTs Test")
 
 # ------------ utils function ------------ #
 def initialize_streamlit():
@@ -564,4 +576,3 @@ if current_page == "chat":
     # Assistant에게 메시지를 보내는 UI 로직
     disabled = st.session_state.get('is_running', False)
     st.chat_input(placeholder="메시지를 입력하세요.", on_submit=run_assistant, key="prompt", disabled=disabled)
-
