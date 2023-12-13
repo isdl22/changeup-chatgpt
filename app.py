@@ -379,22 +379,6 @@ class AssistantAPI():
         tool_outputs = zapier_api.execute_actions_from_assistant(run, assistant_object=self.assistant)
         run = self.submit_tool_outputs(tool_outputs)
 
-import streamlit as st
-OPENAI_API_KEY = st.sidebar.text_input("OpenAI API Key", type="password")
-
-if not OPENAI_API_KEY:
-    st.info("OpenAI API를 먼저 입력해주세요.")
-    st.stop()
-
-import os
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-
-ZAPIER_API_KEY: str = "sk-ak-NoB23a7i15so6exmECdPx9JUkL"
-try:
-    zapier_api = ZapierActionAPI(ZAPIER_API_KEY)
-except ValueError as e:
-    logger.error(e)
-
 # ------------ utils function ------------ #
 def initialize_streamlit():
     """
@@ -516,30 +500,34 @@ def run_assistant():
 
     st.session_state['is_running'] = False
 
+import streamlit as st
+OPENAI_API_KEY = st.sidebar.text_input("OpenAI API Key", type="password")
+
+if not OPENAI_API_KEY:
+    st.info("OpenAI API를 먼저 입력해주세요.")
+    st.stop()
+
+import os
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+
+ZAPIER_API_KEY: str = "sk-ak-NoB23a7i15so6exmECdPx9JUkL"
+
+try:
+    zapier_api = ZapierActionAPI(ZAPIER_API_KEY)
+except ValueError as e:
+    logger.error(e)
+
 # ------------ UI Rendering ------------ #
 # Streamlit에 Assistant 설정
 assistant_api = initialize_streamlit()
 current_page = check_current_page()
 
 
-# Assistant를 설정하는 페이지
+## Assistant를 설정하는 페이지
 if current_page == "setting":
-    # [Assistant 연결하기] UI 렌더링
     with st.container():
-        st.subheader('기존에 만들어놓은 Assistant 연결하기', divider='rainbow')
-        assistant_id = st.text_input("Assistant 연결하기", placeholder="assistant id를 입력해주세요..")
-        st.button("Assistant 연결하기", on_click=connect_assistant, args=(assistant_id,))
-
-
-# [Assistant 생성하기] UI 렌더링
-if current_page == "setting":
-    # gpts에서 만든 zapier 봇 가져오기
-    with st.container():
-        st.subheader('Assistant 새로 만들기', divider='rainbow')
-        assistant_name = st.text_input("Assistant 이름", placeholder="Assistant의 이름을 입력하세요...")
-        assistant_instructions = st.text_area("Instructions", placeholder="Assistant의 instruction을 입력하세요...")
-        st.button("Assistant 생성하기", on_click=create_assistant, args=(assistant_name, assistant_instructions))
-
+        st.subheader('면접왕 이형과 함께하는 자소서 첨삭', divider='rainbow')
+        st.button("면접왕 이형 만나기", on_click=connect_assistant, args=("asst_rxPfrNnLoWAO6qnfz3c57YWK",))
 
 # Assistant를 사용하는 페이지
 if current_page == "chat":
@@ -572,4 +560,3 @@ if current_page == "chat":
     # Assistant에게 메시지를 보내는 UI 로직
     disabled = st.session_state.get('is_running', False)
     st.chat_input(placeholder="메시지를 입력하세요.", on_submit=run_assistant, key="prompt", disabled=disabled)
-
