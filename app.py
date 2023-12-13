@@ -389,7 +389,11 @@ if not OPENAI_API_KEY:
 import os
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
-
+ZAPIER_API_KEY: str = "sk-ak-NoB23a7i15so6exmECdPx9JUkL"
+try:
+    zapier_api = ZapierActionAPI(ZAPIER_API_KEY)
+except ValueError as e:
+    logger.error(e)
 
 # ------------ utils function ------------ #
 def initialize_streamlit():
