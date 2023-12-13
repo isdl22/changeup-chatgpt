@@ -377,8 +377,6 @@ class AssistantAPI():
         run = self.submit_tool_outputs(tool_outputs)
 
 
-ZAPIER_API_KEY: str = "sk-ak-NoB23a7i15so6exmECdPx9JUkL"
-OPENAI_API_KEY: str = "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"
 
 try:
     zapier_api = ZapierActionAPI(ZAPIER_API_KEY)
