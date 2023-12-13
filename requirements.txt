@@ -1,8 +1,9 @@
+bs4
 openai
 langchain
-python-dotenv
-tiktoken
-faiss-cpu
+pypdf
 streamlit
+tiktoken
+faiss-cpu 
 chromadb
-bs4
+pysqlite3-binary
