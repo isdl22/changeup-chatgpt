@@ -402,7 +402,7 @@ def initialize_streamlit():
     """
     # Assistant와 관련한 상태값 세팅
     if 'assistant' not in st.session_state or st.session_state['assistant'] is None:
-        assistant_api = AssistantAPI(OPENAI_API_KEY)
+        assistant_api = AssistantAPI(st.secrets["OPENAI_API_KEY"])
         st.session_state.assistant = assistant_api
     else:
         assistant_api = st.session_state.assistant
