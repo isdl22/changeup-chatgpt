@@ -8,6 +8,22 @@ from typing import Dict, Any, List
 from openai import OpenAI
 import logging
 import time
+import os
+
+#OPENAI_API_KEY = st.sidebar.text_input("OpenAI API Key", type="password")
+
+#if not OPENAI_API_KEY:
+#    st.info("OpenAI API를 먼저 입력해주세요.")
+#    st.stop()
+
+#os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+ZAPIER_API_KEY: str = "sk-ak-NoB23a7i15so6exmECdPx9JUkL"
+
+try:
+    zapier_api = ZapierActionAPI(ZAPIER_API_KEY)
+except ValueError as e:
+    logger.error(e)
 
 # Configure basic logging
 logging.basicConfig(level=logging.INFO, force=True)
@@ -499,23 +515,6 @@ def run_assistant():
               mapping_messages(assistant_api)
 
     st.session_state['is_running'] = False
-
-#import streamlit as st
-#OPENAI_API_KEY = st.sidebar.text_input("OpenAI API Key", type="password")
-
-#if not OPENAI_API_KEY:
-#    st.info("OpenAI API를 먼저 입력해주세요.")
-#    st.stop()
-
-import os
-#os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-ZAPIER_API_KEY: str = "sk-ak-NoB23a7i15so6exmECdPx9JUkL"
-
-try:
-    zapier_api = ZapierActionAPI(ZAPIER_API_KEY)
-except ValueError as e:
-    logger.error(e)
 
 # ------------ UI Rendering ------------ #
 # Streamlit에 Assistant 설정
