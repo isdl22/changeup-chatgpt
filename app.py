@@ -500,17 +500,17 @@ def run_assistant():
 
     st.session_state['is_running'] = False
 
-import streamlit as st
-OPENAI_API_KEY = st.sidebar.text_input("OpenAI API Key", type="password")
+#import streamlit as st
+#OPENAI_API_KEY = st.sidebar.text_input("OpenAI API Key", type="password")
 
-if not OPENAI_API_KEY:
-    st.info("OpenAI API를 먼저 입력해주세요.")
-    st.stop()
+#if not OPENAI_API_KEY:
+#    st.info("OpenAI API를 먼저 입력해주세요.")
+#    st.stop()
 
 import os
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-
-ZAPIER_API_KEY: str = "sk-ak-NoB23a7i15so6exmECdPx9JUkL"
+#os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+os.environ["ZAPIER_API_KEY"] = st.secrets["ZAPIER_API_KEY"]
 
 try:
     zapier_api = ZapierActionAPI(ZAPIER_API_KEY)
